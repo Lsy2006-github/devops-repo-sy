@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: lsy2006/rms-docker-assignment-img:v2
+    image: lsy2006/rms-docker-assignment-img:latest
     container_name: rms-docker-assignment-container
     ports:
       - "8000:4000"
