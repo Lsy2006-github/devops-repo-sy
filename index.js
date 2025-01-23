@@ -1,29 +1,30 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
-const logger = require('./logger');
+const logger = require("./logger");
 const statusMonitor = require("express-status-monitor");
 
 const PORT = process.env.PORT || 4000;
 var startPage = "index.html";
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json({limit: '2mb'}));
-app.use(statusMonitor());
+app.use(bodyParser.json({ limit: "2mb" }));
 
 app.use(express.static("./public"));
 
-const { addGame } = require('./util/sheng-yang-backend')
-app.post('/add-game', addGame);
+app.use(statusMonitor());
 
-const { getGames } = require('./util/zhixiang-backend')
-app.get('/get-games', getGames);
+const { addGame } = require("./util/sheng-yang-backend");
+app.post("/add-game", addGame);
 
-const { editGame, deleteGame } = require('./util/zhixiang-backend')
-app.put('/edit-game/:id', editGame);
-app.delete('/delete-game/:id', deleteGame);
+const { getGames } = require("./util/zhixiang-backend");
+app.get("/get-games", getGames);
 
-const { viewGames } = require('./util/justin-backend')
-app.get('/view-game', viewGames);
+const { editGame, deleteGame } = require("./util/zhixiang-backend");
+app.put("/edit-game/:id", editGame);
+app.delete("/delete-game/:id", deleteGame);
+
+const { viewGames } = require("./util/justin-backend");
+app.get("/view-game", viewGames);
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/" + startPage);
@@ -35,6 +36,8 @@ server = app.listen(PORT, function () {
     address.address == "::" ? "localhost" : address.address
   }:${address.port}`;
   console.log(`Project hosted at: ${baseUrl}`);
+  logger.info(`Demo project at: ${baseUrl}!`);
+  logger.error(`Example or error log`);
 });
 
 module.exports = { app, server };
