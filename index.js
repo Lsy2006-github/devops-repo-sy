@@ -1,10 +1,14 @@
 var express = require("express");
 var bodyParser = require("body-parser");
 var app = express();
+const logger = require('./logger');
+const statusMonitor = require("express-status-monitor");
+
 const PORT = process.env.PORT || 4000;
 var startPage = "index.html";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({limit: '2mb'}));
+app.use(statusMonitor());
 
 app.use(express.static("./public"));
 
